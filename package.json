@@ -1,0 +1,19 @@
+{
+  "name": "mobilize-america-be-assignment",
+  "version": "1.0.0",
+  "main": "app.js",
+  "author": "Sam Ghitelman <sghitelman@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon node app.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "mysql2": "^1.6.5",
+    "nodemon": "^1.19.1",
+    "sequelize": "^5.11.0"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^5.5.0"
+  }
+}
