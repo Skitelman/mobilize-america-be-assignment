@@ -1,17 +1,23 @@
 import express from 'express';
+import cors from 'cors';
 import idx from 'idx';
 
+import redirectController from './controllers/redirect_controller';
+import linkController from './controllers/link_controller';
+import statsController from './controllers/stats_controller';
+
 const app = express();
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.use(redirectController);
+app.use('/link', linkController);
+app.use('/stats', statsController);
 
 app.get('/', (req, res) => {
-  res.send('The Shortest URL of All!')
+  res.status(200).json({ data: 'The Shortest URL of All!' });
 });
-
-app.get('/:shortLink', (req, res) => {
-  const shortLink = idx(req, _ => _.params.shortLink); 
-  console.log(`You say you want to go to ${req.params.shortLink}`);
-  res.redirect('https://www.nytimes.com');
-})
 
 app.listen(3000, () => {
   console.log('Sam\'s link shortener is open for business');
