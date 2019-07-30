@@ -13,5 +13,6 @@ const options = {
 
 const dbClient = new Sequelize(config.database, config.username, config.password, options);
 
+Link.load(dbClient);
 
 export default dbClient;
