@@ -2,21 +2,21 @@
   "development": {
     "username": "root",
     "password": null,
-    "database": "mobilize_america_be_database_development",
+    "database": "mobilize_america_be_assignment_development",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "test": {
     "username": "root",
     "password": null,
-    "database": "mobilize_america_be_database_test",
+    "database": "mobilize_america_be_assignment_test",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "production": {
     "username": "root",
     "password": null,
-    "database": "mobilize_america_be_database_production",
+    "database": "mobilize_america_be_assignment_production",
     "host": "127.0.0.1",
     "dialect": "mysql"
   }
