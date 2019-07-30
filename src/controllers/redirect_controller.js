@@ -1,15 +1,25 @@
 import express from 'express';
 import idx from 'idx';
+import asyncHandler from 'express-async-handler';
 
 const redirectController = express.Router();
 
 redirectController.get(
-  '/:shortLink',
-  (req, res) => {
-    const shortLink = idx(req, _ => _.params.shortLink); 
-    console.log(`You say you want to go to ${req.params.shortLink}`);
-    res.redirect('https://www.nytimes.com');  
-  }
+  '/:shortUrl',
+  asyncHandler(async (req, res) => {
+    const { db } = res.locals;
+    const shortUrl = idx(req, _ => _.params.shortUrl); 
+    const links = await db.models.Link.findAll({
+      where: {
+        shortUrl
+      },
+      order: [
+        ['createdAt', 'DESC']
+      ]
+    });
+    const destinationUrl = links[0].destinationUrl;
+    res.redirect(destinationUrl);  
+  })
 )
 
 export default redirectController;

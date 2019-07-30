@@ -7,23 +7,23 @@ const linkController = express.Router();
 
 linkController.post(
   '/',
-  asyncHandler(async(req, res) => {
+  asyncHandler(async (req, res) => {
     const { db } = res.locals;
     const destinationUrl = idx(req, _ => _.body.destinationUrl);
-    const shortLink = randomstring.generate({
+    const randAddress = randomstring.generate({
       length: 7,
       charset: 'alphanumeric',
     });
-    const shortUrl = `http://localhost:3000/${shortLink}`;
     const link = await db.models.Link.create({
       destinationUrl,
-      shortUrl,
+      shortUrl: randAddress,
     }) 
+    const shortUrl = `http://localhost:3000/${randAddress}`;
     console.log('New link ID: ', link.id);
     res.status(200).json({
       data: {
         destinationUrl,
-        shortLink: `http://localhost:3000/${shortLink}`,
+        shortUrl,
       }
     })
   })
