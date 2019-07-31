@@ -18,17 +18,22 @@ statsController.get(
 
     // Get the total number of visits to the link per day
     const [linkVisitsByDay] = await db.query(`SELECT DATE(createdAt) date, COUNT(DISTINCT id) total FROM LinkVisits WHERE linkId = ${link.id} GROUP BY DATE(createdAt);`)
+
+    // Get total unique IPs that have visited the link
+    const [totalVisitorResults] = await db.query(`SELECT COUNT(DISTINCT requestIP) from LinkVisits WHERE linkId = ${link.id} AND (requestIP != '::1' AND requestIP IS NOT NULL);`);
+    const totalUniqueVisitors = Object.values(totalVisitorResults[0])[0];
     res.status(200).json({
       data: {
         shortUrl: link.shortUrl,
         destinationUrl: link.destinationUrl,
         linkCreatedAt: link.createdAt,
         totalLinkVisits,
-        linkVisitsByDay
+        totalUniqueVisitors,
+        linkVisitsByDay,
       }
-    })
-
+    });
   })
-)
+);
+
 
 export default statsController;
