@@ -10,7 +10,8 @@ generalStatsController.get(
   '/topLinks',
   asyncHandler(async (req, res) => {
     const { db } = res.locals;
-
+    
+    // Query the database for the top five most visited links
     const [topLinks] = await db.query(`SELECT l.destinationURL, l.shortUrl, COUNT(lv.id) totalVisits FROM LinkVisits lv JOIN Links l on lv.linkId = l.id GROUP BY lv.linkId ORDER BY totalVisits DESC LIMIT 5;`);
     res.status(200).json({
       data: {

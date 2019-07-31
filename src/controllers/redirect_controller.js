@@ -12,15 +12,19 @@ redirectController.get(
   getLink,
   asyncHandler(async (req, res) => {
     const { db, link } = res.locals;
+
+    // Record a LinkVisit record for the short link
     await db.models.LinkVisit.create({
       linkId: link.id,
       requestIP: req.ip
     });
 
+    // Ensure that the destinationUrl contains a valid protocol.
+    // If there is none, use http
     const destinationUrl = url.parse(link.destinationUrl);
     let destination;
     if (destinationUrl.protocol) {
-      destination = destinationUrl;
+      destination = link.destinationUrl;
     } else {
       destination = `http://${destinationUrl.href}`
     }

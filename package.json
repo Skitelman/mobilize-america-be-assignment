@@ -5,7 +5,8 @@
   "author": "Sam Ghitelman <sghitelman@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon --exec babel-node src/app.js"
+    "start": "nodemon --exec babel-node src/app.js",
+    "test": "mocha --require @babel/register,@babel/polyfill -t 3000 ./test/**"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -20,8 +21,12 @@
   "devDependencies": {
     "@babel/core": "^7.5.5",
     "@babel/node": "^7.5.5",
+    "@babel/polyfill": "^7.4.4",
     "@babel/preset-env": "^7.5.5",
     "@babel/register": "^7.5.5",
-    "sequelize-cli": "^5.5.0"
+    "chai": "^4.2.0",
+    "mocha": "^6.2.0",
+    "sequelize-cli": "^5.5.0",
+    "sinon": "^7.3.2"
   }
 }
