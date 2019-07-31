@@ -21,12 +21,30 @@ linkController.post(
       })
     }
 
-    if(customUrl && customUrl.length > 20) {
-      return res.status(400).json({
-        error: {
-          message: 'Your custom link must be 20 characters or fewer'
+		// Validate custom url
+    if(customUrl) {
+			if (customUrl.length > 20) {
+				return res.status(400).json({
+					error: {
+						message: 'Your custom link must be 20 characters or fewer'
+					}
+				})
+			}
+
+			//ensure custom url is not already taken
+			const customLinks = await db.models.Link.findAll({
+        where: {
+          shortUrl: customUrl
         }
-      })
+			});
+
+      if (customLinks.length > 0) {
+        return res.status(400).json({
+          error: {
+            message: `The customUrl: ${customUrl} has already been claimed. Please try another customUrl`
+          }
+        })
+      }
     }
 
     // Check to see if short Link for the particular destination exists
