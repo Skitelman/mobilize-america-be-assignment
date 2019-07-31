@@ -2,29 +2,15 @@ import express from 'express';
 import asyncHandler from 'express-async-handler';
 import idx from 'idx';
 
+import { getLink } from '../middleware/getLink';
+
 const statsController = express.Router();
 
 statsController.get(
   '/:shortUrl',
+  getLink,
   asyncHandler(async (req, res) => {
-    const { db } = res.locals;
-    const shortUrl = idx(req, _ => _.params.shortUrl);
-    const links = await db.models.Link.findAll({
-      where: {
-        shortUrl
-      },
-      order: [
-        ['createdAt', 'DESC']
-      ]
-    });
-    const link = links[0];
-    if (!link) {
-      res.status(400).json({
-        error: {
-          message: `There is no short link with the url: http://localhost:3000/${shortUrl}`
-        }
-      })
-    }
+    const { db, link } = res.locals;
 
     // Get the total number of visits to the link
     const [totalLinkVisitResults] = await db.query(`SELECT COUNT(*) FROM LinkVisits WHERE linkId = ${link.id};`);

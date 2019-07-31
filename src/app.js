@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Make db client in res object
-app.use(async (req, res, next) => {
+app.use((req, res, next) => {
   res.locals = {
     db: dbClient,
   };
