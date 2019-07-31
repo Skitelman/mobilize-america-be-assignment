@@ -40,7 +40,7 @@ linkController.post(
       return res.status(200).json({
         data: {
           destinationUrl: links[0].destinationUrl,
-          shortUrl: `http://localhost:3000/${links[0].shortUrl}`
+          shortUrl: `${req.protocol}://${req.hostname}/${links[0].shortUrl}`
         }
       })
     }
@@ -71,7 +71,7 @@ linkController.post(
       destinationUrl,
       shortUrl: shortAddress,
     }) 
-    const shortUrl = `http://localhost:3000/${shortAddress}`;
+    const shortUrl = `${req.protocol}://${req.hostname}/${shortAddress}`;
     console.log('New link ID: ', link.id);
     return res.status(200).json({
       data: {

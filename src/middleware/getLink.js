@@ -14,9 +14,10 @@ export const getLink = async (req, res, next) => {
   });
   const link = links[0];
   if (!link) {
+    const url = `${req.protocol}://${req.hostname}/${shortUrl}`
     res.status(400).json({
       error: {
-        message: `There is no short link with the url: http://localhost:3000/${shortUrl}`
+        message: `There is no short link with the url: ${url}`
       }
     })
   }

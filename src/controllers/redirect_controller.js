@@ -1,5 +1,6 @@
 import express from 'express';
 import idx from 'idx';
+import url from 'url';
 import asyncHandler from 'express-async-handler';
 
 import { getLink } from '../middleware/getLink';
@@ -16,8 +17,14 @@ redirectController.get(
       requestIP: req.ip
     });
 
-    const destinationUrl = link.destinationUrl;
-    res.redirect(destinationUrl);  
+    const destinationUrl = url.parse(link.destinationUrl);
+    let destination;
+    if (destinationUrl.protocol) {
+      destination = destinationUrl;
+    } else {
+      destination = `http://${destinationUrl.href}`
+    }
+    res.redirect(destination);
   })
 )
 
