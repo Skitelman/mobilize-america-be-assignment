@@ -5,8 +5,12 @@ export class Link {
     dbClient.define(
       'Link',
       {
-        destinationUrl: DataTypes.STRING,
-        shortUrl: DataTypes.STRING,
+        destinationUrl: {
+          type: DataTypes.STRING
+        },
+        shortUrl:{
+          type: DataTypes.STRING
+        }
       },
       {},
     )

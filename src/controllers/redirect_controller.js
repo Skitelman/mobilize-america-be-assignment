@@ -17,7 +17,12 @@ redirectController.get(
         ['createdAt', 'DESC']
       ]
     });
-    const destinationUrl = links[0].destinationUrl;
+    const link = links[0];
+    await db.models.LinkVisit.create({
+      linkId: link.id
+    });
+
+    const destinationUrl = link.destinationUrl;
     res.redirect(destinationUrl);  
   })
 )
