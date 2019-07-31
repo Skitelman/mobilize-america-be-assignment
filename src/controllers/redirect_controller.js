@@ -18,8 +18,16 @@ redirectController.get(
       ]
     });
     const link = links[0];
+    if (!link) {
+      res.status(400).json({
+        error: {
+          message: `There is no short link with the url: http://localhost:3000/${shortUrl}`
+        }
+      })
+    }
     await db.models.LinkVisit.create({
-      linkId: link.id
+      linkId: link.id,
+      requestIP: req.ip
     });
 
     const destinationUrl = link.destinationUrl;
